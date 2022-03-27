@@ -30,9 +30,26 @@ public class ArticleController {
 
 	@RequestMapping("detail")
 	@ResponseBody
-	// EX : http://localhost:8082/usr/article/detail?id=2 => id 매개변수에 2L 이 들어옵니다.
 	public Article showDetail(long id) {
 		Optional<Article> article = articleRepository.findById(id);
 		return article.get();
+	}
+
+	@RequestMapping("doModify")
+	@ResponseBody
+	public Article showModify(long id, String title, String body) {
+		Article article = articleRepository.findById(id).get();
+
+		if ( title != null ) {
+			article.setTitle(title);
+		}
+
+		if ( body != null ) {
+			article.setBody(body);
+		}
+
+		articleRepository.save(article);
+
+		return article;
 	}
 }
