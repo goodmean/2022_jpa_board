@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,5 +63,32 @@ public class ArticleController {
 
 		articleRepository.deleteById(id);
 		return "%d번 게시물이 삭제되었습니다.".formatted(id);
+	}
+
+	@RequestMapping("doWrite")
+	@ResponseBody
+	public String doWrite(String title, String body){
+
+		if( title == null || title.trim().length() == 0){
+			return "제목을 입력해주세요.";
+		}
+
+		title = title.trim();
+
+		if( body == null || body.trim().length() == 0 ){
+			return "내용을 입력해주세요.";
+		}
+
+		body = body.trim();
+
+		Article article = new Article();
+		article.setRegDate(LocalDateTime.now());
+		article.setUpdateDate(LocalDateTime.now());
+		article.setTitle(title);
+		article.setBody(body);
+
+		articleRepository.save(article);
+
+		return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
 	}
 }
