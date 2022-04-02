@@ -2,6 +2,8 @@ package com.chm.exam.jpaBoard.article.controller;
 
 import com.chm.exam.jpaBoard.article.dao.ArticleRepository;
 import com.chm.exam.jpaBoard.article.domain.Article;
+import com.chm.exam.jpaBoard.user.UserRepository.UserRepository;
+import com.chm.exam.jpaBoard.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class ArticleController {
 	@Autowired
 	private ArticleRepository articleRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 //	@RequestMapping("test")
 //	@ResponseBody
@@ -86,6 +90,9 @@ public class ArticleController {
 		article.setUpdateDate(LocalDateTime.now());
 		article.setTitle(title);
 		article.setBody(body);
+
+		User user = userRepository.findById(1L).get();
+		article.setUser(user);
 
 		articleRepository.save(article);
 
