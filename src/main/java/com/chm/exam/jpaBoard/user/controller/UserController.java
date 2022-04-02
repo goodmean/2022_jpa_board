@@ -38,6 +38,12 @@ public class UserController {
 			return "이메일을 입력해주세요.";
 		}
 
+		boolean isDupleEmail = userRepository.existsByEmail(email);
+
+		if( isDupleEmail ){
+			return "이미 등록된 이메일입니다.";
+		}
+
 		email = email.trim();
 
 		if( password == null || password.trim().length() == 0 ){
