@@ -34,7 +34,7 @@ public class UserController {
 
 		email = email.trim();
 
-//		User user = userRepository.findByEmail(email).orElse(null ); 방법1
+//		User user = userRepository.findByEmail(email).orElse(null); 방법1
 		Optional<User> user = userRepository.findByEmail(email);
 
 		if (user.isEmpty()) {
@@ -47,14 +47,12 @@ public class UserController {
 
 		password = password.trim();
 
-		System.out.println("user.getPassword() : " + user.get().getPassword());
-		System.out.println("password : " + password);
-
 		if (user.get().getPassword().equals(password) == false) {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 
 		return "%s님 환영합니다.".formatted(user.get().getName());
+
 	}
 
 	@RequestMapping("doJoin")
@@ -95,5 +93,17 @@ public class UserController {
 		userRepository.save(user);
 
 		return "%d번 회원이 생성되었습니다.".formatted(user.getId());
+	}
+
+	@RequestMapping("me")
+	@ResponseBody
+	public User showMe(long userId) {
+		Optional<User> user = userRepository.findById(userId);
+
+		if ( user.isEmpty() ) {
+			return null;
+		}
+
+		return user.get();
 	}
 }
