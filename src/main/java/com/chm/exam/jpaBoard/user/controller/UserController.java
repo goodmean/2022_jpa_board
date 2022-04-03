@@ -32,7 +32,6 @@ public class UserController {
 	@ResponseBody
 	public String doLogin(String email, String password, HttpServletRequest req, HttpServletResponse resp) {
 
-
 		if (email == null || email.trim().length() == 0) {
 			return "이메일을 입력해주세요.";
 		}
@@ -63,6 +62,26 @@ public class UserController {
 //		resp.addCookie(cookie); 쿠키는 해킹당하기 쉽다.
 
 		return "%s님 환영합니다.".formatted(user.get().getName());
+
+	}
+
+	@RequestMapping("doLogout")
+	@ResponseBody
+	public String doLogout(HttpSession session) {
+
+		boolean isLogined = false;
+
+		if (session.getAttribute("loginedUserId") != null) {
+			isLogined = true;
+		}
+
+		if ( isLogined == false ) {
+			return "로그인 상태가 아닙니다.";
+		}
+
+		session.removeAttribute("loginedUserId");
+
+		return "로그아웃 되었습니다.";
 
 	}
 
