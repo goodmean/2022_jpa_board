@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -56,8 +57,11 @@ public class UserController {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 
-		Cookie cookie = new Cookie("loginedUserId", user.get().getId() + "");
-		resp.addCookie(cookie);
+		HttpSession session = req.getSession();
+		session.setAttribute("loginedUserId", user.get().getId());
+
+//		Cookie cookie = new Cookie("loginedUserId", user.get().getId() + "");
+//		resp.addCookie(cookie); 쿠키는 해킹당하기 쉽다.
 
 		return "%s님 환영합니다.".formatted(user.get().getName());
 
