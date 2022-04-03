@@ -32,6 +32,12 @@ public class UserController {
 	@ResponseBody
 	public String doLogin(String email, String password, HttpServletRequest req, HttpServletResponse resp) {
 
+		HttpSession session = req.getSession();
+
+		if(session.getAttribute("loginedUserId") != null){
+			return "이미 로그인 되어 있습니다.";
+		}
+
 		if (email == null || email.trim().length() == 0) {
 			return "이메일을 입력해주세요.";
 		}
@@ -55,7 +61,6 @@ public class UserController {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 
-		HttpSession session = req.getSession();
 		session.setAttribute("loginedUserId", user.get().getId());
 
 //		Cookie cookie = new Cookie("loginedUserId", user.get().getId() + "");
