@@ -35,7 +35,7 @@ public class UserController {
 		HttpSession session = req.getSession();
 
 		if(session.getAttribute("loginedUserId") != null){
-			return "이미 로그인 되어 있습니다.";
+			return "이미 로그인 상태입니다.";
 		}
 
 		if (email == null || email.trim().length() == 0) {
