@@ -28,22 +28,9 @@ public class ArticleController {
 //	}
 
 	@RequestMapping("list")
-	@ResponseBody
 	public String showList() {
-		List<Article> articles = articleRepository.findAll();
-		
-		String html = "";
-		
-		html += "<ul>";
 
-		for(Article article : articles){
-			html += "<li>";
-			html += "%d번 / %s / %s".formatted(article.getId(), article.getTitle(), article.getBody());
-			html += "</li>";
-		}
-		html += "</ul>";
-		
-		return html;
+		return "usr/article/list";
 	}
 
 	@RequestMapping("list2")
