@@ -72,32 +72,32 @@ public class ArticleController {
 				""".formatted(article.getId());
 	}
 
-
 	@RequestMapping("doDelete")
 	@ResponseBody
 	public String doDelete(long id) {
 		if ( articleRepository.existsById(id) == false ) {
-			return "%d번 게시물은 이미 삭제되었거나 존재하지 않습니다.".formatted(id);
+			return """
+                    <script>
+                    alert('%d번 게시물은 이미 삭제되었거나 존재하지 않습니다.');
+                    history.back();
+                    </script>
+                    """.formatted(id);
 		}
 
 		articleRepository.deleteById(id);
-		return "%d번 게시물이 삭제되었습니다.".formatted(id);
+
+		return """
+				<script>
+				alert('%d번 게시물이 삭제되었습니다.');
+				location.replace('list');
+				</script>
+				""".formatted(id);
 	}
 
 	@RequestMapping("write")
 	public String showWrite(){
 
 		return "usr/article/write";
-	}
-
-	@RequestMapping("detail")
-	public String showDetail(long id, Model model){
-		Optional<Article> opArticle = articleRepository.findById(id);
-		Article article = opArticle.get();
-
-		model.addAttribute("article", article);
-
-		return "usr/article/detail";
 	}
 
 	@RequestMapping("doWrite")
@@ -133,5 +133,15 @@ public class ArticleController {
 				location.replace('list');
 				</script>
 				""".formatted(article.getId());
+	}
+
+	@RequestMapping("detail")
+	public String showDetail(long id, Model model){
+		Optional<Article> opArticle = articleRepository.findById(id);
+		Article article = opArticle.get();
+
+		model.addAttribute("article", article);
+
+		return "usr/article/detail";
 	}
 }
