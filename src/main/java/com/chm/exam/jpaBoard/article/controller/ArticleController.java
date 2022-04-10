@@ -37,23 +37,41 @@ public class ArticleController {
 		return "usr/article/list";
 	}
 
+	@RequestMapping("modify")
+	public String doModify(long id, Model model) {
+		Optional<Article> opArticle = articleRepository.findById(id);
+		Article article = opArticle.get();
+
+		model.addAttribute("article", article);
+
+		return "usr/article/modify";
+	}
+
 	@RequestMapping("doModify")
 	@ResponseBody
-	public Article doModify(long id, String title, String body) {
+	public String doModify(long id, String title, String body) {
 		Article article = articleRepository.findById(id).get();
 
-		if ( title != null ) {
+		if (title != null) {
 			article.setTitle(title);
 		}
 
-		if ( body != null ) {
+		if (body != null) {
 			article.setBody(body);
 		}
 
+		article.setUpdateDate(LocalDateTime.now());
+
 		articleRepository.save(article);
 
-		return article;
+		return """
+				<script>
+				alert('%d번 게시물이 수정되었습니다.');
+				location.replace('list');
+				</script>
+				""".formatted(article.getId());
 	}
+
 
 	@RequestMapping("doDelete")
 	@ResponseBody
