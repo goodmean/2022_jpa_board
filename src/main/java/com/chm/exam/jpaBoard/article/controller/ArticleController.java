@@ -32,8 +32,7 @@ public class ArticleController {
 	public String showList(Model model) {
 		List<Article> articles = articleRepository.findAll();
 
-		model.addAttribute("age", 28);
-		model.addAttribute("name", "폴");
+		model.addAttribute("articles", articles);
 
 		return "usr/article/list";
 	}
