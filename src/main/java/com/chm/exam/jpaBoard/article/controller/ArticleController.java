@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -95,14 +96,21 @@ public class ArticleController {
 	}
 
 	@RequestMapping("write")
-	public String showWrite(){
+	public String showWrite(HttpSession session){
 
 		return "usr/article/write";
 	}
 
 	@RequestMapping("doWrite")
 	@ResponseBody
-	public String doWrite(String title, String body){
+	public String doWrite(String title, String body, HttpSession session){
+		boolean isLogined = false;
+		long loginedUserId = 0;
+
+		if ( session.getAttribute("loginedUserId") != null ) {
+			isLogined = true;
+			loginedUserId = (long)session.getAttribute("loginedUserId");
+		}
 
 		if( title == null || title.trim().length() == 0){
 			return "제목을 입력해주세요.";
@@ -122,7 +130,7 @@ public class ArticleController {
 		article.setTitle(title);
 		article.setBody(body);
 
-		User user = userRepository.findById(1L).get();
+		User user = userRepository.findById(loginedUserId).get();
 		article.setUser(user);
 
 		articleRepository.save(article);
