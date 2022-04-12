@@ -114,9 +114,9 @@ public class ArticleController {
 		return """
 				<script>
 				alert('%d번 게시물이 수정되었습니다.');
-				location.replace('list');
+				location.replace('detail?id=%d');
 				</script>
-				""".formatted(article.getId());
+				""".formatted(article.getId(), article.getId());
 	}
 
 	@RequestMapping("doDelete")
