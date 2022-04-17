@@ -114,7 +114,7 @@ public class UserController {
 		return """
                 <script>
                 alert('%s님 환영합니다.');
-                history.back();
+                location.replace('/usr/article/list');
                 </script>
                 """.formatted(user.get().getName());
 
@@ -136,8 +136,32 @@ public class UserController {
 
 		session.removeAttribute("loginedUserId");
 
-		return "로그아웃 되었습니다.";
+		return """
+                <script>
+                alert('로그아웃 되었습니다.');
+                location.replace('login');
+                </script>
+                """;
 
+	}
+
+	@RequestMapping("join")
+	public String showJoin(HttpSession session, Model model) {
+		boolean isLogined = false;
+		long loginedUserId = 0;
+
+		if (session.getAttribute("loginedUserId") != null) {
+			isLogined = true;
+			loginedUserId = (long) session.getAttribute("loginedUserId");
+		}
+
+		if (isLogined) {
+			model.addAttribute("msg", "로그아웃 후 이용해주세요.");
+			model.addAttribute("historyBack", true);
+			return "common/js";
+		}
+
+		return "usr/user/join";
 	}
 
 	@RequestMapping("doJoin")
@@ -145,25 +169,45 @@ public class UserController {
 	public String doJoin(String name, String email, String password){
 
 		if( name == null || name.trim().length() == 0 ){
-			return "이름을 입력해주세요.";
+			return """
+                    <script>
+                    alert('이름을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
 		}
 
 		name = name.trim();
 
 		if( email == null || email.trim().length() == 0 ){
-			return "이메일을 입력해주세요.";
+			return """
+                    <script>
+                    alert('이메일을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
 		}
 
 		boolean isDupleEmail = userRepository.existsByEmail(email);
 
 		if( isDupleEmail ){
-			return "이미 등록된 이메일입니다.";
+			return """
+                    <script>
+                    alert('이미 등록된 이메일입니다.');
+                    history.back();
+                    </script>
+                    """;
 		}
 
 		email = email.trim();
 
 		if( password == null || password.trim().length() == 0 ){
-			return "비밀번호를 입력해주세요.";
+			return """
+                    <script>
+                    alert('비밀번호를 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
 		}
 
 		password = password.trim();
@@ -177,7 +221,12 @@ public class UserController {
 
 		userRepository.save(user);
 
-		return "%d번 회원이 생성되었습니다.".formatted(user.getId());
+		return """
+                <script>
+                alert('%d번 회원이 생성되었습니다.');
+                location.replace('login');
+                </script>
+                """.formatted(user.getId());
 	}
 
 	@RequestMapping("me")

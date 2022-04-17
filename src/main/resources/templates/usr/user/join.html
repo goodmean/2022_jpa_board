@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{usr/common/layout}">
+<head>
+    <title>로그인</title>
+</head>
+
+<main layout:fragment="main" class="mt-[20px]">
+    <h1 class="container mx-auto font-bold text-[1.3rem]">회원가입</h1>
+
+    <form action="doJoin" method="POST" class="container mx-auto">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">이름</span>
+            </label>
+            <input name="name" type="text" placeholder="이름을 입력해주세요." class="input input-bordered w-full max-w-xs" maxlength="50">
+        </div>
+
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">이메일</span>
+            </label>
+            <input name="email" type="email" placeholder="이메일을 입력해주세요." class="input input-bordered w-full max-w-xs" maxlength="50">
+        </div>
+
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">비밀번호</span>
+            </label>
+            <input name="password" type="password" placeholder="비밀번호를 입력해주세요." class="input input-bordered w-full max-w-xs" maxlength="50">
+        </div>
+
+        <div class="mt-[20px]">
+            <input type="submit" value="회원가입" class="btn btn-primary">
+        </div>
+    </form>
+</main>
+</html>
