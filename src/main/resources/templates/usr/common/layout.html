@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="light" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,29 +9,20 @@
     <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">JPA Community</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.0/dist/full.css" rel="stylesheet" type="text/css" />
 
-    <style>
-        /* 다크 모드 */
-        /*
-        body {
-            background-color:#343434;
-            color:white;
-        }
-
-        a {
-          color: white;
-        }
-        */
-    </style>
+    <link rel="stylesheet" href="/resource/common.css">
 
 </head>
 
 <body>
 
-<div class="text-lg font-bold">로고</div>
+<div class="container mx-auto">
+    <div class="text-[2rem] font-bold">레딧</div>
+</div>
 
-<div>
-    <ul class="flex">
+<div class="container mx-auto">
+    <ul class="flex ml-[-10px]">
         <li><a href="/usr/article/write" class="block p-[10px] hover:text-[#FF0000]">글 쓰기</a></li>
         <li><a href="/usr/article/list" class="block p-[10px] hover:text-[#FF0000]">글 리스트</a></li>
         <li><a href="/usr/user/login" class="block p-[10px] hover:text-[#FF0000]">로그인</a></li>
