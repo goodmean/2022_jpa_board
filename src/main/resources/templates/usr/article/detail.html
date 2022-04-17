@@ -5,44 +5,30 @@
     <title>게시물 본문</title>
 </head>
 
-<main layout:fragment="main">
-    <h1>게시물 본문</h1>
+<main layout:fragment="main" class="mt-[20px]">
+    <h1 class="container mx-auto font-bold text-[1.3rem] px-[10px]">[[${article.title}]]</h1>
 
-    <div>
-        <a th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글 수정</a>
-        <a th:if="${article.user.id == session.loginedUserId}"
-           onclick="if ( confirm('정말로 삭제하겠습니까?') == false ) return false;" th:href="@{doDelete(id=${article.id})}">글
-            삭제</a>
+    <div class="container mx-auto px-[10px] mt-[10px]">
+        <div>
+            <span class="badge">번호 : [[${article.id}]]</span>
+        </div>
+        <div class="mt-[10px]">
+            <span class="badge badge-outline">작성일 : [[${#strings.substring(article.regDate, 2, 10)}]]</span>
+            <span class="badge badge-outline">작성자 : [[${article.user.name}]]</span>
+        </div>
+        <div class="mt-[10px] whitespace-pre-line">
+            [[${article.body}]]
+        </div>
     </div>
 
-    <div>
-        <div>
-            <div>번호</div>
-            <div>
-                [[${article.id}]]
-            </div>
-        </div>
-        <hr>
-        <div>
-            <div>작성날짜</div>
-            <div>
-                [[${article.regDate}]]
-            </div>
-        </div>
-        <hr>
-        <div>
-            <div>제목</div>
-            <div>
-                [[${article.title}]]
-            </div>
-        </div>
-        <hr>
-        <div>
-            <div>내용</div>
-            <div>
-                [[${article.body}]]
-            </div>
-        </div>
+    <div class="container mt-[10px] mx-auto px-[10px]">
+        <a class="btn btn-sm btn-primary" href="/usr/article/list">목록</a>
+        <button class="btn btn-sm" onclick="history.back();">뒤로가기</button>
+        <a class="btn btn-sm" th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글
+            수정</a>
+        <a class="btn btn-sm" th:if="${article.user.id == session.loginedUserId}"
+           onclick="if ( confirm('정말로 삭제하겠습니까?') == false ) return false;" th:href="@{doDelete(id=${article.id})}">글
+            삭제</a>
     </div>
 </main>
 
