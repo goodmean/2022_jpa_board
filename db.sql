@@ -45,7 +45,7 @@ CREATE TABLE `article` (
     `user_id` BIGINT UNSIGNED NOT NULL
 );
 
-# 회원데이터 생성
+# 게시물데이터 생성
 INSERT INTO `article`
 SET reg_date = NOW(),
 update_date = NOW(),
