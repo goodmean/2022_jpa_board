@@ -8,6 +8,8 @@
 
     <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">JPA Community</title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         /* 다크 모드 */
         /*
@@ -26,10 +28,15 @@
 
 <body>
 
-<div>로고</div>
+<div class="text-lg font-bold">로고</div>
 
 <div>
-    <a href="write">글 쓰기</a> / <a href="list">글 리스트</a>
+    <ul class="flex">
+        <li><a href="/usr/article/write" class="block p-[10px] hover:text-[#FF0000]">글 쓰기</a></li>
+        <li><a href="/usr/article/list" class="block p-[10px] hover:text-[#FF0000]">글 리스트</a></li>
+        <li><a href="/usr/user/login" class="block p-[10px] hover:text-[#FF0000]">로그인</a></li>
+        <li><a href="/usr/user/join" class="block p-[10px] hover:text-[#FF0000]">회원가입</a></li>
+    </ul>
 </div>
 
 <main layout:fragment="main">
